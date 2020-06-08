@@ -56,7 +56,7 @@ const TodoForm: React.FC<Props> = ({
         }}
         validationSchema={Yup.object({
           title: Yup.string()
-            .max(15, 'Must be 15 characters or less')
+            .max(35, 'Must be 15 characters or less')
             .required('Required'),
           description: Yup.string()
             .max(255, 'Must be 255 characters or less')
