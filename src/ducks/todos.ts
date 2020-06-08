@@ -76,6 +76,9 @@ export const createTodo = (
 
     const asyncResponse = await fetch(`https://backend-test.pi-top.com/todo-test/v1/todos`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(todo)
     });
     const update = await asyncResponse.json();
@@ -92,6 +95,9 @@ export const toggleTodoIsDone = (
   try {
     const asyncResponse = await fetch(`https://backend-test.pi-top.com/todo-test/v1/todos/${todo.id}`, {
       method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         isDone: todo.isDone
       })
