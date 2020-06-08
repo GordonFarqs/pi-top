@@ -17,3 +17,10 @@ Again with time constraints in mind there is NOT alot of fetching state / error 
 I am not sure why, but when doing a GET https://backend-test.pi-top.com/todo-test/v1/todos - there is no `description` information being returned.
 
 The POST https://backend-test.pi-top.com/todo-test/v1/todos does however return the description in it's response. So newly created Todos contain a description but fetched ones do not.
+
+
+To Run:
+
+`yarn install`
+
+`yarn start`
