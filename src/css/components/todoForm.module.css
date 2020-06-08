@@ -1,0 +1,127 @@
+.formContainer {
+  composes: container from "../generic/layout.module.css";
+  composes: borderWithShadow from "../generic/layout.module.css";
+  composes: modalForm from "../components/modal.module.css";
+  min-height: 40vh;
+  border-radius: 30px;
+  padding-bottom: 40px;
+}
+
+.heading {
+  composes: titleHeading from "../generic/typography.module.css";
+}
+
+.formRow {
+  composes: font from "../generic/typography.module.css";
+  margin-top: 15px;
+}
+
+.formLabel {
+  text-align: left;
+  display: inline-block;
+  width: 100%;
+}
+
+.formLabel:after {
+  content: ":";
+}
+
+.formInput {
+  display: inline-block;
+  border: 1px solid green;
+  width: 100%;
+  vertical-align: middle;
+  min-height: 30px;
+  border: 2px solid gray;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+  background-color: white;
+}
+
+.formInput > div {
+  background-color: white;
+}
+
+input.formInput {
+  padding: 0 8px;
+  min-height: 40px;
+}
+
+textarea.formInput {
+  padding: 5px 8px;
+
+}
+
+.formInput:focus {
+  border-color: #2684FF;
+  border-width: 3px;
+}
+
+.formError {
+  color: red;
+  display: block;
+  font-size: 12px;
+  padding-top: 4px;
+  margin-bottom: 10px;
+}
+
+.inputRow {
+  margin: 0 0 20px;
+  height: 40px;
+}
+
+.inputLabel {
+  display: inline-block;
+  font-weight: bold;
+  text-align: left;
+}
+
+.buttonRow {
+  padding-top: 25px;
+  display: flex;
+  justify-content: center;
+}
+
+.saveButton {
+  composes: regular from "../generic/buttons.module.css";
+  margin: 0 10px;
+}
+
+.cancelButton {
+  composes: secondary from "../generic/buttons.module.css";
+  margin: 0 10px;
+}
+
+.loader {
+  composes: loader from "../generic/layout.module.css";
+  margin: 0px 15px;
+  width: 8px;
+  height: 8px;
+}
+
+@media only screen and (min-width: 768px) {
+  .formLabel {
+    text-align: right;
+    width: 200px;
+    margin-right: 15px;
+  }
+  .formInput {
+    width: 265px;
+  }
+  .formError {
+    padding-left: 215px;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .formLabel {
+    width: 300px;
+  }
+  .formInput {
+    width: 380px;
+  }
+  .formError {
+    padding-left: 315px;
+  }
+}

@@ -1,0 +1,20 @@
+.container {
+  composes: container from "../generic/layout.module.css";
+  composes: borderWithShadow from "../generic/layout.module.css";
+  min-height: 80vh;
+  margin-top: 20px;
+  border-radius: 30px;
+}
+
+.heading {
+  composes: titleHeading from "../generic/typography.module.css";
+
+}
+
+.addTodoButton {
+  composes: regular from "../generic/buttons.module.css";
+  position: relative;
+  bottom: 58px;
+  right: 25px;
+  float: right;
+}

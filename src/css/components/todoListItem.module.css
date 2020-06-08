@@ -1,0 +1,57 @@
+.listItem {
+  composes: borderWithShadow from "../generic/layout.module.css";
+  border-radius: 8px;
+  min-height: 30px;
+  margin: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: column;
+  width: 88%;
+}
+
+.title {
+  cursor: pointer;
+  padding: 15px 20px;
+  min-width: 85%;
+}
+
+.checkbox {
+  vertical-align: middle;
+}
+
+.isDone {
+  padding: 5px 20px 20px;
+}
+
+.isDone input {
+  cursor: pointer;
+}
+
+.loader {
+  composes: loader from "../generic/layout.module.css";
+  margin: 0px 45px;
+}
+
+@media only screen and (min-width: 768px) {
+  .listItem {
+    width: 92%;
+    flex-direction: row;
+    align-items: center;
+  }
+  .isDone {
+    padding: 5px 20px;
+  }
+  .title {
+    min-width: 65%;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .listItem {
+    width: 95%;
+  }
+  .title {
+    min-width: 75%;
+  }
+}

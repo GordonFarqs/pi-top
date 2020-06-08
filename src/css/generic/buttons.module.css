@@ -1,0 +1,32 @@
+.button {
+  composes: font from "../generic/typography.module.css";
+  cursor: pointer;
+  display: inline-block;
+  border: 2px solid;
+  border-radius: 8px;
+  line-height: 1;
+  padding: 10px 20px;
+  transition: background-color .3s, border-color .3s;
+}
+
+.regular {
+  composes: button;
+  border-color: lightseagreen;
+  color: lightseagreen;
+  background-color: #D1F8EF;
+}
+
+.regular:hover {
+  background-color: #D4D4D4;
+}
+
+.secondary {
+  composes: button;
+  border-color: #C1CBCA;
+  color: black;
+  background-color: #D4D4D4;
+}
+
+.secondary:hover {
+ background-color: #A4A4A4 ;
+}
