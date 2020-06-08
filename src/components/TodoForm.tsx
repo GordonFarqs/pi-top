@@ -6,7 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RootState } from 'ducks/store';
-import { createTodo, TodoType } from 'ducks/todos';
+import { createTodo, fetchTodo, TodoType } from 'ducks/todos';
 import { closeModal } from 'ducks/modal';
 
 import styles from 'css/components/todoForm.module';
@@ -27,7 +27,7 @@ const createSelectOption = (option: string | number) => ({
 })
 
 const TodoForm: React.FC<Props> = ({
-  resource = {},
+  resource = {} as TodoType,
 }) => {
 
   const isViewMode = Object.keys(resource).length > 0;
@@ -35,24 +35,48 @@ const TodoForm: React.FC<Props> = ({
   const todos = useSelector((state: RootState) => state.todos);
   const titleText = resource ? 'View Todo' : 'Create Todo';
   const priorityOptions = [1,2,3].map(createSelectOption);
-
+  const [todo, setTodo] = useState<TodoType>({})
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   useEffect(() => {
-    if (isLoading) {
+    if (isSubmitting) {
       dispatch(closeModal());
-      setIsLoading(false);
+      setIsSubmitting(false);
+    }
+    if (isLoading) {
+      setIsLoading(false)
+      const foundTodo = todos.find((t) => t.id === resource.id)
+      if (foundTodo) {
+        setTodo(foundTodo)
+      }
     }
   }, [todos]);
+
+  useEffect(() => {
+    if (isViewMode) {
+      setIsLoading(true)
+      dispatch(fetchTodo(resource))
+    }
+  }, [])
+
+  if (isLoading) {
+    return (
+      <div className={styles.formContainerLoading}>
+        <div className={styles.largeLoader} />
+      </div>
+    )
+  }
 
   return (
     <div className={styles.formContainer}>
       <h2 className={styles.heading}>{titleText}</h2>
       <Formik
         initialValues={{
-          title: resource.title || '',
-          description: resource.description || '',
-          priority: resource.priority || 2,
-          tags: resource.tags || [],
+          title: todo.title || '',
+          description: todo.description || '',
+          priority: todo.priority || 2,
+          tags: todo.tags || [],
         }}
         validationSchema={Yup.object({
           title: Yup.string()
@@ -63,7 +87,7 @@ const TodoForm: React.FC<Props> = ({
             .required('Required'),
         })}
         onSubmit={(values: FormValues) => {
-          setIsLoading(true)
+          setIsSubmitting(true)
           dispatch(createTodo(values as TodoType))
         }}
       >
@@ -134,7 +158,7 @@ const TodoForm: React.FC<Props> = ({
                 type="submit"
                 className={styles.saveButton}
               >
-                {!isLoading ? 'Submit' : (
+                {!isSubmitting ? 'Submit' : (
                   <div className={styles.loader} />
                 )}
               </button>

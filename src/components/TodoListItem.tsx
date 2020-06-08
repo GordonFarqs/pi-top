@@ -26,7 +26,7 @@ const TodoListItem: React.FC<Props> = ({
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     setIsLoading(false);
-  }, [todo]);
+  }, [todo.isDone]);
 
   return (
     <div className={styles.listItem}>

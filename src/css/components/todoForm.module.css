@@ -100,6 +100,19 @@ textarea.formInput {
   height: 8px;
 }
 
+.largeLoader {
+  composes: loader from "../generic/layout.module.css";
+  width: 120px;
+  height: 120px;
+}
+
+.formContainerLoading {
+  composes: formContainer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media only screen and (min-width: 768px) {
   .formLabel {
     text-align: right;

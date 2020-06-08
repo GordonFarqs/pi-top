@@ -7,9 +7,10 @@ import { createReducer } from 'ducks/createReducer';
 // Action Types - Very short list of actions, keeping to a minimum to save time.
 const LOAD = 'todo/LOAD';
 const CREATE = 'todo/CREATE';
+const FETCH_TODO = 'todo/FETCH_TODO';
 const TOGGLE_IS_DONE = 'todo/TOGGLE_IS_DONE';
 
-type Types = typeof LOAD | typeof CREATE | typeof TOGGLE_IS_DONE;
+type Types = typeof LOAD | typeof CREATE | typeof TOGGLE_IS_DONE | typeof FETCH_TODO;
 
 // State
 export type TodoType = {
@@ -48,12 +49,20 @@ const toggledTodoIsDone = (todo: TodoType) => ({
   }
 });
 
+const fetchedTodo = (todo: TodoType) => ({
+  type: FETCH_TODO as typeof FETCH_TODO,
+  payload: {
+    todo
+  }
+});
+
 
 type LoadAction = ReturnType<typeof loadedTodos>;
 type CreateAction = ReturnType<typeof createdTodo>;
 type ToggleTodoIsDoneAction = ReturnType<typeof toggledTodoIsDone>;
+type FetchTodoAction = ReturnType<typeof fetchedTodo>;
 
-export type Action = LoadAction | CreateAction | ToggleTodoIsDoneAction;
+export type Action = LoadAction | CreateAction | ToggleTodoIsDoneAction | FetchTodoAction;
 
 // thunks - ideally these would dipatch more actions to indicate intiation / completion / errors of network requests.
 // Ideally using a factory function to generate these network related actions.
@@ -110,6 +119,19 @@ export const toggleTodoIsDone = (
   }
 };
 
+export const fetchTodo = (
+  todo: TodoType
+): ThunkAction<void, RootState, unknown, FetchTodoAction> => async dispatch => {
+  try {
+    const asyncResponse = await fetch(`https://backend-test.pi-top.com/todo-test/v1/todos/${todo.id}`);
+    const update = await asyncResponse.json();
+    dispatch(fetchedTodo(update as TodoType));
+  }  catch (error) {
+    /* Should be handling this.. */
+    console.error("error", error)
+  }
+};
+
 // Reducer
 export default createReducer<State, Types, Action>(initialState, {
   [LOAD]: (state, action: LoadAction) => {
@@ -121,6 +143,9 @@ export default createReducer<State, Types, Action>(initialState, {
   [TOGGLE_IS_DONE]: (state, action: ToggleTodoIsDoneAction) => {
     const indexToEdit = state.findIndex(item => item.id === action.payload.todo.id);
     return update(state, { [indexToEdit]: { isDone: { $set: action.payload.todo.isDone }}});
+  },
+  [FETCH_TODO]: (state, action: FetchTodoAction) => {
+    const indexToReplace = state.findIndex(item => item.id === action.payload.todo.id);
+    return update(state, { [indexToReplace]: { $set: action.payload.todo }});
   }
 });
-
